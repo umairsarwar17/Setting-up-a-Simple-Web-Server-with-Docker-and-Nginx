@@ -1,0 +1,248 @@
+### Project 1: Setting up a Simple Web Server with Docker and Nginx
+
+In this project, you'll learn how to use **Docker** to create a containerized web server running **Nginx**, one of the most popular and efficient web servers. This will help you understand basic Docker operations like creating a container, defining a custom image, and accessing it from your local machine.
+
+### Technologies used:
+
+- **Docker**: Tool for creating and managing containers.
+- **Nginx**: A lightweight, high-performance web server.
+
+---
+
+### Step-by-Step Instructions:
+
+#### 1. **Install Docker**
+
+Before you begin, make sure **Docker** is installed on your computer. If you don’t have it yet, go to Docker's installation guide and follow the instructions for your operating system.
+
+#### 2. **Create the Project Directory**
+
+Start by creating a new folder on your computer. This folder will contain all the files required to build and run your web server.
+
+- Open your terminal (Command Prompt on Windows, Terminal on macOS/Linux).
+    
+- Create a new folder where you want to keep your project files:
+    
+    bash
+    
+    Copy code
+    
+    `mkdir my-nginx-project cd my-nginx-project`
+    
+
+Inside this folder, create an `index.html` file which is the page Nginx will serve to visitors.
+
+- Open a text editor (e.g., VSCode, Notepad++) and create a simple HTML file. For example:
+    
+    html
+    
+    Copy code
+    
+    ```
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Namae Umair's Gym</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    section:nth-child(even) {
+      background-color: #ecf0f1;
+    }
+
+    section h2 {
+      margin-bottom: 20px;
+    }
+
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Styling for the services list */
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    ul li {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    /* Styling for the contact info */
+    p.contact-info {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <h1>Welcome to  Umair's Gym</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home">
+    <h2>Your Fitness Journey Starts Here!</h2>
+    <p>At  Umair's Gym, we help you achieve your fitness goals with personalized training and state-of-the-art equipment. Join us today and get stronger, healthier, and happier!</p>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p> Umair's Gym is dedicated to providing top-notch fitness training. Whether you are looking to lose weight, build muscle, or improve your overall health, we have the right programs and expert trainers for you.</p>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <p>We offer a variety of fitness services to meet your needs:</p>
+    <ul>
+      <li>Personal Training</li>
+      <li>Group Fitness Classes</li>
+      <li>Weight Loss Programs</li>
+      <li>Muscle Building & Strength Training</li>
+      <li>Yoga & Flexibility Training</li>
+    </ul>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>If you have any questions or would like to join, feel free to contact us:</p>
+    <p class="contact-info">Email: info@namaegym.com</p>
+    <p class="contact-info">Phone: +123 456 7890</p>
+    <p class="contact-info">Address: 123 Gym Street, Fitness City</p>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Namae Umair's Gym | All rights reserved</p>
+  </footer>
+</body>
+</html>
+
+Save the file as `index.html` in the project folder.
+
+#### 3. **Write the Dockerfile**
+
+Next, you'll create a **Dockerfile**. This is a script that tells Docker how to set up your container.
+```
+`FROM nginx:alpine 
+#Use the official Nginx image
+COPY ./index.html /usr/share/nginx/html  
+#Copy the index.html into the container
+EXPOSE 80 
+#Expose port 80 to make the server accessible`
+```
+
+Explanation of each line:
+
+- `FROM nginx:alpine`: This tells Docker to use the official Nginx image (based on Alpine Linux, which is lightweight).
+- `COPY ./index.html /usr/share/nginx/html`: This copies your `index.html` file from your local machine to the Nginx directory where it serves web pages.
+- `EXPOSE 80`: Exposes port 80 of the container so it can be accessed from your browser.
+#### 4. **Build the Docker Image**
+
+Now, you’ll need to **build** the Docker image using the `Dockerfile` you've created.
+
+- Open your terminal and make sure you are inside your project directory (`my-nginx-project`).
+    
+- Run the following command to build the image:  ```
+```
+docker build -t my-nginx-app .
+```
+
+Explanation:
+
+- `docker build`: This tells Docker to create a new image.
+- `-t my-nginx-app`: This gives your image a name (in this case, `my-nginx-app`).
+- `.`: The dot `.` indicates the current directory, where the `Dockerfile` is located.
+
+#### 5. **Run the Docker Container**
+
+Once the image is built, you can create and run the container. The container will serve the index.html` file using Nginx.
+
+```
+docker run -d -p 8080:80 my-nginx-app
+```
+
+Explanation:
+
+- `docker run`: This tells Docker to run the container.
+- `-d`: This option runs the container in the background (detached mode).
+- `-p 8080:80`: This maps port 80 inside the container (Nginx's default port) to port 8080 on your local machine, so you can access it from your browser.
+- `my-nginx-app`: This is the name of the image you just built.
+
+#### 6. **Access the Web Server**
+
+Now that your container is running, you can view the web page in your browser:
+
+1. Open your web browser (Chrome, Firefox, etc.).
+2. Go to: `http://localhost:8080`
+
+You should see the message "Hello, Nginx is running inside a Docker container!" displayed on the page.
+
+
+### Summary of Steps:
+
+1. **Install Docker** on your system.
+2. **Create a project directory** and add an `index.html` file with your content.
+3. **Write a Dockerfile** that defines how the container should be set up.
+4. **Build the Docker image** with the `docker build` command.
+5. **Run the container** and map ports with the `docker run` command.
+6. **Access the web server** by going to `http://localhost:8080` in your browser.
+
+Congratulations! You've just set up a simple web server using Docker and Nginx.
