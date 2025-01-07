@@ -23,21 +23,13 @@ Start by creating a new folder on your computer. This folder will contain all th
     
 - Create a new folder where you want to keep your project files:
     
-    bash
-    
-    Copy code
-    
     `mkdir my-nginx-project cd my-nginx-project`
     
 
 Inside this folder, create an `index.html` file which is the page Nginx will serve to visitors.
 
 - Open a text editor (e.g., VSCode, Notepad++) and create a simple HTML file. For example:
-    
-    html
-    
-    Copy code
-    
+        
     ```
     <!DOCTYPE html>
 <html lang="en">
